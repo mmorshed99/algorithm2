@@ -54,8 +54,6 @@ if __name__ == "__main__":
                             failure= True
                             coordinate = count
                             break
-
-
             
 
     if failure == True:
