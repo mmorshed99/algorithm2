@@ -23,7 +23,7 @@ class HeapBuilder:
 
      number = len(self._data)
 
-     levels = (math.log(number)/math.log(2))
+     levels = (math.log(number)/math.log(2)) ##getting log2 value to get height
      if levels == math.ceil(levels):
        levels = int(levels)
        p =  math.pow(2,levels)
@@ -35,19 +35,19 @@ class HeapBuilder:
      p = p-1
      p = int(p)
      
-     q = number
-     while (p !=q) and (p>=0) :
-      for i in range(p ,q):
+     total_elems = number
+     while (p !=total_elems) and (p>=0) :
+      for i in range(p ,total_elems):
         if i%2 == 1 and i !=number :
          if(i+1 < number):
-          if (self._data[i] < self._data[i+1]):
-            if self._data[i] < self._data[(i-1)//2]:
+          if (self._data[i] < self._data[i+1]):  ##if ith element is smaller than other child
+            if self._data[i] < self._data[(i-1)//2]: ## if ith element is smaller than parent, must be swapped
                self._swaps.append(((i-1)//2,i))
                self._data[i], self._data[(i-1)//2] = self._data[(i-1)//2], self._data[i]
                r = 2 * i + 1
                j = i
                #t = r + 1
-               while r < number:
+               while r < number: ###Iteratively incresing r to check if current number is larger than the numbers below
                     if ((r+1 < number) and  (self._data[r] < self._data[r+1]) and (self._data[r] < self._data[j])) or ((r+1 >= number) and (self._data[r] < self._data[j])):  
 
                       self._swaps.append((j,r))
@@ -82,7 +82,7 @@ class HeapBuilder:
                       r = 2 * j + 1
                     else:
                       break
-         else:
+         else:  #### This is needed if i+1 goes beyod the available numbers
            if self._data[i] < self._data[(i-1)//2]:
                self._swaps.append(((i-1)//2,i))
                self._data[i], self._data[(i-1)//2] = self._data[(i-1)//2], self._data[i]
@@ -107,7 +107,7 @@ class HeapBuilder:
 
       p = (p-1)//2
 
-      q = p * 2 
+      total_elems = p * 2 
 
 
 
