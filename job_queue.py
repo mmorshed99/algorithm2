@@ -18,6 +18,7 @@ class JobQueue:
           print(self.assigned_workers[i], self.start_times[i]) 
 
     def assign_jobs(self):
+        #### This function will return the next node who will be assigned the task based on priority ####
         def find_smaller(left, right,tree_left, tree_right, prio_tree_left, prio_tree_right):
             
             if prio_tree_left < prio_tree_right:
@@ -42,6 +43,8 @@ class JobQueue:
         
 
         for i in range(len(self.jobs)):
+           ### This loop is running for each task to be assigned ###
+           ### The task will be assigned to the root node always and tree will be adjusted after the task is assigend to the root ###
            self.assigned_workers[i] = tree[0]
            self.start_times[i] = prio[tree[0]]
            prio[tree[0]] += self.jobs[i]
@@ -52,8 +55,10 @@ class JobQueue:
              left = 2*current +1
            if 2*current + 2 < self.num_workers:
              right = 2*current + 2
+           ### Trying to find the next one based on priority ###
            next = find_smaller(left, right, tree[left], tree[right], prio[tree[left]], prio[tree[right]])
            while (current != next and next != -1):
+                ### if priority of next is better than current, next will move upwards in the tree ###
                 while ((prio[tree[current]] > prio[tree[next]]) or ((prio[tree[current]] == prio[tree[next]]) and (tree[current] > tree[next]))):
                       tree[current], tree[next] = tree[next], tree[current]
                       current = next
